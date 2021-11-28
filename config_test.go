@@ -4,13 +4,13 @@
 //
 // Author: FishGoddess
 // Email: fishgoddess@qq.com
-// Created at 2021/11/02 00:22:27
+// Created at 2021/11/29 02:35:07
 
 package logityaml
 
 import "testing"
 
-// go test -v -cover -run=^TestYamlLoggerMakerMakeLogger$
-func TestYamlLoggerMakerMakeLogger(t *testing.T) {
+// go test -v -cover -run =^TestConfigToLogitOptions$
+func TestConfigToLogitOptions(t *testing.T) {
 
 }
