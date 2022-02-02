@@ -29,5 +29,5 @@ _历史版本的特性请查看 [HISTORY.md](./HISTORY.md)。未来版本的新�
 
 | 项目 | 作者 | 描述 | 链接 |
 | -----------|--------|-------------|-------------------|
-| logit | FishGoddess | 一个高性能、功能强大且极易上手的日志库 | [码云](https://gitee.com/FishGoddess/logit) / [GitHub](https://github.com/FishGoddess/logit) |
+| logit | FishGoddess | 一个高性能、功能强大且极易上手的日志库 | [码云](https://gitee.com/go-logit/logit) / [GitHub](https://github.com/go-logit/logit) |
 
