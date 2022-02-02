@@ -29,5 +29,5 @@ If you find that something is not working as expected please open an _**issue**_
 
 | Project | Author | Description | link |
 | -----------|--------|-------------|------------------|
-| logit | FishGoddess | A high-performance and easy-to-use logging foundation | [Gitee](https://gitee.com/FishGoddess/logit) / [GitHub](https://github.com/FishGoddess/logit) |
+| logit | FishGoddess | A high-performance and easy-to-use logging foundation | [Gitee](https://gitee.com/go-logit/logit) / [GitHub](https://github.com/go-logit/logit) |
 

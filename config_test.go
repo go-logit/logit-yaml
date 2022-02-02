@@ -12,5 +12,14 @@ import "testing"
 
 // go test -v -cover -run =^TestConfigToLogitOptions$
 func TestConfigToLogitOptions(t *testing.T) {
+	c := newDefaultConfig()
 
+	options, err := c.toLogitOptions()
+	if err != nil {
+		t.Error(err)
+	}
+
+	for _, _ = range options {
+
+	}
 }

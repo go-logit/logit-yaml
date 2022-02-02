@@ -13,27 +13,27 @@ import (
 	"errors"
 	"io/ioutil"
 
-	"github.com/FishGoddess/logit"
+	"github.com/go-logit/logit"
 	"gopkg.in/yaml.v2"
 )
 
 func init() {
-	err := logit.RegisterLoggerMaker("yaml", newYamlLoggerMaker())
+	err := logit.RegisterLoggerMaker("yaml", newYamlMaker())
 	if err != nil {
 		panic(err)
 	}
 }
 
-// yamlLoggerMaker makes logit.Logger from yaml configuration.
-type yamlLoggerMaker struct{}
+// yamlMaker makes logit.Logger from yaml configuration.
+type yamlMaker struct{}
 
-// newYamlLoggerMaker 创建一个 yaml 日志配置初始化器
-func newYamlLoggerMaker() logit.LoggerMaker {
-	return new(yamlLoggerMaker)
+// newYamlMaker creates a yaml logger maker.
+func newYamlMaker() logit.LoggerMaker {
+	return new(yamlMaker)
 }
 
-// yamlToOptions reads yaml and transfers yaml to []logit.Option.
-func (ylm *yamlLoggerMaker) yamlToOptions(yamlFile string) ([]logit.Option, error) {
+// parseOptionsFrom reads yaml and transfers yaml to []logit.Option.
+func (ylm *yamlMaker) parseOptionsFrom(yamlFile string) ([]logit.Option, error) {
 	fileBytes, err := ioutil.ReadFile(yamlFile)
 	if err != nil {
 		return nil, err
@@ -49,7 +49,7 @@ func (ylm *yamlLoggerMaker) yamlToOptions(yamlFile string) ([]logit.Option, erro
 }
 
 // MakeLogger makes a new logger using params and returns an error if something wrong happens.
-func (ylm *yamlLoggerMaker) MakeLogger(ctx context.Context, params ...interface{}) (*logit.Logger, error) {
+func (ylm *yamlMaker) MakeLogger(ctx context.Context, params ...interface{}) (*logit.Logger, error) {
 	if len(params) < 1 {
 		return nil, errors.New("YamlLoggerMaker: need the path of yaml configuration")
 	}
@@ -59,7 +59,7 @@ func (ylm *yamlLoggerMaker) MakeLogger(ctx context.Context, params ...interface{
 		return nil, errors.New("YamlLoggerMaker: params[0] must be the path of yaml configuration")
 	}
 
-	options, err := ylm.yamlToOptions(yamlFile)
+	options, err := ylm.parseOptionsFrom(yamlFile)
 	if err != nil {
 		return nil, err
 	}

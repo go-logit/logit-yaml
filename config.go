@@ -8,21 +8,54 @@
 
 package logityaml
 
-import "github.com/FishGoddess/logit"
+import "github.com/go-logit/logit"
+
+// loggerConfig stores all configurations of logger.
+type loggerConfig struct {
+	Level       string `json:"level" yaml:"level"`               // The level of a logger.
+	NeedPid     bool   `json:"need_pid" yaml:"need_pid"`         // Logs will carry pid if needPid is true.
+	NeedCaller  bool   `json:"need_caller" yaml:"need_caller"`   // Logs will carry caller information if needCaller is true.
+	MsgKey      string `json:"msg_key" yaml:"msg_key"`           // The key of message in a log.
+	TimeKey     string `json:"time_key" yaml:"time_key"`         // The key of time in a log.
+	LevelKey    string `json:"level_key" yaml:"level_key"`       // The key of level in a log.
+	PIDKey      string `json:"pid_key" yaml:"pid_key"`           // The key of pid in a log.
+	FileKey     string `json:"file_key" yaml:"file_key"`         // The key of caller's file in a log.
+	LineKey     string `json:"line_key" yaml:"line_key"`         // The key of caller's line in a log.
+	TimeFormat  string `json:"time_format" yaml:"time_format"`   // The format of time in a log.
+	CallerDepth int    `json:"caller_depth" yaml:"caller_depth"` // The depth of caller.
+}
 
 // config is the struct of yaml configuration.
 type config struct {
-	// TODO Complete yaml configuration
-	Level string `yaml:"level"`
+	Logger loggerConfig `json:"logger" yaml:"logger"` // Wrap with logger so we can use the same config file.
 }
 
-// newConfig returns a new config holder.
-func newConfig() *config {
-	return new(config)
+// newDefaultConfig returns a default config.
+func newDefaultConfig() *config {
+	return &config{
+		loggerConfig{
+			Level:       "debug",
+			NeedPid:     false,
+			NeedCaller:  false,
+			MsgKey:      "log.msg",
+			TimeKey:     "log.time",
+			LevelKey:    "log.level",
+			PIDKey:      "log.pid",
+			FileKey:     "log.file",
+			LineKey:     "log.line",
+			TimeFormat:  "2006-01-02 15:04:05",
+			CallerDepth: 3,
+		},
+	}
 }
 
 // toLogitOptions returns a slice of logit.Option for creating logit.Logger.
 // Returns an error if something wrong happens.
 func (c *config) toLogitOptions() ([]logit.Option, error) {
-	return nil, nil
+	if c == nil {
+		return nil, nil
+	}
+
+	options := make([]logit.Option, 0, 8)
+	return options, nil
 }
