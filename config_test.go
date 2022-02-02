@@ -14,7 +14,7 @@ import "testing"
 func TestConfigToLogitOptions(t *testing.T) {
 	c := newDefaultConfig()
 
-	options, err := c.toLogitOptions()
+	options, err := c.Options()
 	if err != nil {
 		t.Error(err)
 	}

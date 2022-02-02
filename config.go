@@ -8,7 +8,10 @@
 
 package logityaml
 
-import "github.com/go-logit/logit"
+import (
+	"fmt"
+	"github.com/go-logit/logit"
+)
 
 // loggerConfig stores all configurations of logger.
 type loggerConfig struct {
@@ -49,13 +52,47 @@ func newDefaultConfig() *config {
 	}
 }
 
-// toLogitOptions returns a slice of logit.Option for creating logit.Logger.
+// levelOption returns the level option of c.
+func (c *config) levelOption() (logit.Option, error) {
+	switch c.Logger.Level {
+	case "debug":
+		return logit.Options().WithDebugLevel(), nil
+	case "info":
+		return logit.Options().WithInfoLevel(), nil
+	case "warn":
+		return logit.Options().WithWarnLevel(), nil
+	case "error":
+		return logit.Options().WithErrorLevel(), nil
+	case "off":
+		return logit.Options().WithOffLevel(), nil
+	default:
+		return nil, fmt.Errorf("level %s mismatches", c.Logger.Level)
+	}
+}
+
+// Options returns a slice of logit.Option for creating logit.Logger.
 // Returns an error if something wrong happens.
-func (c *config) toLogitOptions() ([]logit.Option, error) {
+func (c *config) Options() ([]logit.Option, error) {
 	if c == nil {
 		return nil, nil
 	}
 
-	options := make([]logit.Option, 0, 8)
-	return options, nil
+	levelOption, err := c.levelOption()
+	if err != nil {
+		return nil, err
+	}
+
+	options := logit.Options()
+	result := []logit.Option{levelOption}
+
+	cfg := c.Logger
+	if cfg.NeedPid {
+		result = append(result, options.WithPid())
+	}
+
+	if cfg.NeedCaller {
+		result = append(result, options.WithCaller())
+	}
+
+	return result, nil
 }
