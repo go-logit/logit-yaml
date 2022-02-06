@@ -1,0 +1,12 @@
+logger:
+  level: "info"
+  need_pid: true
+  need_caller: true
+  msg_key: "msg"
+  time_key: "time"
+  level_key: "level"
+  pid_key: "pid"
+  file_key: "file"
+  line_key: "line"
+  time_format: "20060102150405"
+  caller_depth: 3

@@ -28,38 +28,53 @@ func init() {
 type yamlMaker struct{}
 
 // newYamlMaker creates a yaml logger maker.
-func newYamlMaker() logit.LoggerMaker {
+func newYamlMaker() *yamlMaker {
 	return new(yamlMaker)
 }
 
-// parseOptionsFrom reads yaml and transfers yaml to []logit.Option.
-func (ylm *yamlMaker) parseOptionsFrom(yamlFile string) ([]logit.Option, error) {
+// parseOptions reads yaml and transfers yaml to []logit.Option.
+func (ym *yamlMaker) parseOptions(yamlFile string) ([]logit.Option, error) {
 	fileBytes, err := ioutil.ReadFile(yamlFile)
 	if err != nil {
 		return nil, err
 	}
 
-	cfg := newConfig()
+	cfg := newDefaultConfig()
 	err = yaml.Unmarshal(fileBytes, cfg)
 	if err != nil {
 		return nil, err
 	}
 
-	return cfg.toLogitOptions()
+	return cfg.ToOptions()
+}
+
+func (ym *yamlMaker) getConfig(params ...interface{}) (*config, error) {
+	if len(params) < 1 {
+		return nil, errors.New("yamlMaker: need the path of yaml configuration")
+	}
+
+	configPath, ok := params[0].(string)
+	if !ok {
+		return nil, errors.New("yamlMaker: params[0] must be the path of yaml configuration")
+	}
+
+	configBytes, err := ioutil.ReadFile(configPath)
+	if err != nil {
+		return nil, err
+	}
+
+	cfg := newDefaultConfig()
+	return cfg, yaml.Unmarshal(configBytes, cfg)
 }
 
 // MakeLogger makes a new logger using params and returns an error if something wrong happens.
-func (ylm *yamlMaker) MakeLogger(ctx context.Context, params ...interface{}) (*logit.Logger, error) {
-	if len(params) < 1 {
-		return nil, errors.New("YamlLoggerMaker: need the path of yaml configuration")
+func (ym *yamlMaker) MakeLogger(ctx context.Context, params ...interface{}) (*logit.Logger, error) {
+	cfg, err := ym.getConfig(params...)
+	if err != nil {
+		return nil, err
 	}
 
-	yamlFile, ok := params[0].(string)
-	if !ok {
-		return nil, errors.New("YamlLoggerMaker: params[0] must be the path of yaml configuration")
-	}
-
-	options, err := ylm.parseOptionsFrom(yamlFile)
+	options, err := cfg.ToOptions()
 	if err != nil {
 		return nil, err
 	}

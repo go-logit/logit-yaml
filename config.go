@@ -30,7 +30,7 @@ type loggerConfig struct {
 
 // config is the struct of yaml configuration.
 type config struct {
-	Logger loggerConfig `json:"logger" yaml:"logger"` // Wrap with logger so we can use the same config file.
+	Logger loggerConfig `json:"logger" yaml:"logger"` // Wrap with logger, so we can use the same config file.
 }
 
 // newDefaultConfig returns a default config.
@@ -70,9 +70,9 @@ func (c *config) levelOption() (logit.Option, error) {
 	}
 }
 
-// Options returns a slice of logit.Option for creating logit.Logger.
+// ToOptions returns a slice of logit.Option for creating logit.Logger.
 // Returns an error if something wrong happens.
-func (c *config) Options() ([]logit.Option, error) {
+func (c *config) ToOptions() ([]logit.Option, error) {
 	if c == nil {
 		return nil, nil
 	}
