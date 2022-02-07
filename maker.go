@@ -50,12 +50,12 @@ func (ym *yamlMaker) parseOptions(yamlFile string) ([]logit.Option, error) {
 
 func (ym *yamlMaker) getConfig(params ...interface{}) (*config, error) {
 	if len(params) < 1 {
-		return nil, errors.New("yamlMaker: need the path of yaml configuration")
+		return nil, errors.New("logit-yaml: need the path of yaml configuration")
 	}
 
 	configPath, ok := params[0].(string)
 	if !ok {
-		return nil, errors.New("yamlMaker: params[0] must be the path of yaml configuration")
+		return nil, errors.New("logit-yaml: params[0] must be the path of yaml configuration")
 	}
 
 	configBytes, err := ioutil.ReadFile(configPath)

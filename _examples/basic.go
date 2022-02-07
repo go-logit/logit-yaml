@@ -11,7 +11,7 @@ package main
 import (
 	"context"
 	"github.com/go-logit/logit"
-	_ "github.com/go-logit/logit-yaml"
+	_ "github.com/go-logit/logit-yaml" // Register yaml maker to logit.
 )
 
 func main() {
