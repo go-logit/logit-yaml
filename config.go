@@ -11,6 +11,7 @@ package logityaml
 import (
 	"fmt"
 	"github.com/go-logit/logit"
+	"time"
 )
 
 // loggerConfig stores all configurations of logger.
@@ -21,11 +22,12 @@ type loggerConfig struct {
 	MsgKey      string `json:"msg_key" yaml:"msg_key"`           // The key of message in a log.
 	TimeKey     string `json:"time_key" yaml:"time_key"`         // The key of time in a log.
 	LevelKey    string `json:"level_key" yaml:"level_key"`       // The key of level in a log.
-	PIDKey      string `json:"pid_key" yaml:"pid_key"`           // The key of pid in a log.
+	PidKey      string `json:"pid_key" yaml:"pid_key"`           // The key of pid in a log.
 	FileKey     string `json:"file_key" yaml:"file_key"`         // The key of caller's file in a log.
 	LineKey     string `json:"line_key" yaml:"line_key"`         // The key of caller's line in a log.
 	TimeFormat  string `json:"time_format" yaml:"time_format"`   // The format of time in a log.
 	CallerDepth int    `json:"caller_depth" yaml:"caller_depth"` // The depth of caller.
+	AutoFlush   string `json:"auto_flush" yaml:"auto_flush"`     // The frequency between two flush operations. See time.ParseDuration.
 }
 
 // config is the struct of yaml configuration.
@@ -43,7 +45,7 @@ func newDefaultConfig() *config {
 			MsgKey:      "log.msg",
 			TimeKey:     "log.time",
 			LevelKey:    "log.level",
-			PIDKey:      "log.pid",
+			PidKey:      "log.pid",
 			FileKey:     "log.file",
 			LineKey:     "log.line",
 			TimeFormat:  "2006-01-02 15:04:05",
@@ -83,7 +85,7 @@ func (c *config) ToOptions() ([]logit.Option, error) {
 	}
 
 	options := logit.Options()
-	result := []logit.Option{levelOption}
+	result := append(make([]logit.Option, 0, 16), levelOption)
 
 	cfg := c.Logger
 	if cfg.NeedPid {
@@ -92,6 +94,47 @@ func (c *config) ToOptions() ([]logit.Option, error) {
 
 	if cfg.NeedCaller {
 		result = append(result, options.WithCaller())
+	}
+
+	if cfg.MsgKey != "" {
+		result = append(result, options.WithMsgKey(cfg.MsgKey))
+	}
+
+	if cfg.TimeKey != "" {
+		result = append(result, options.WithTimeKey(cfg.TimeKey))
+	}
+
+	if cfg.LevelKey != "" {
+		result = append(result, options.WithLevelKey(cfg.LevelKey))
+	}
+
+	if cfg.PidKey != "" {
+		result = append(result, options.WithPidKey(cfg.PidKey))
+	}
+
+	if cfg.FileKey != "" {
+		result = append(result, options.WithFileKey(cfg.FileKey))
+	}
+
+	if cfg.LineKey != "" {
+		result = append(result, options.WithLineKey(cfg.LineKey))
+	}
+
+	if cfg.TimeFormat != "" {
+		result = append(result, options.WithTimeFormat(cfg.TimeFormat))
+	}
+
+	if cfg.CallerDepth > 0 {
+		result = append(result, options.WithCallerDepth(cfg.CallerDepth))
+	}
+
+	if cfg.AutoFlush != "" {
+		frequency, err := time.ParseDuration(cfg.AutoFlush)
+		if err != nil {
+			return nil, err
+		}
+
+		result = append(result, options.WithAutoFlush(frequency))
 	}
 
 	return result, nil

@@ -22,7 +22,7 @@ var (
 			MsgKey:      "msg",
 			TimeKey:     "time",
 			LevelKey:    "level",
-			PIDKey:      "pid",
+			PidKey:      "pid",
 			FileKey:     "file",
 			LineKey:     "line",
 			TimeFormat:  "20060102150405",
