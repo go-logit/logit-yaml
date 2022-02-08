@@ -10,16 +10,16 @@ package logityaml
 
 import "testing"
 
-// go test -v -cover -run =^TestConfigToLogitOptions$
-func TestConfigToLogitOptions(t *testing.T) {
+// go test -v -cover -run =^TestConfigToOptions$
+func TestConfigToOptions(t *testing.T) {
 	c := newDefaultConfig()
 
-	options, err := c.toLogitOptions()
+	options, err := c.ToOptions()
 	if err != nil {
 		t.Error(err)
 	}
 
-	for _, _ = range options {
+	for range options {
 
 	}
 }

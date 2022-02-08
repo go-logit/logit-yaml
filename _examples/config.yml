@@ -1,0 +1,37 @@
+logger:
+  level: "info"
+  need_pid: true
+  need_caller: true
+  msg_key: "msg"
+  time_key: "time"
+  level_key: "level"
+  pid_key: "pid"
+  file_key: "file"
+  line_key: "line"
+  time_format: "20060102150405"
+  caller_depth: 4
+  auto_flush: ""
+  appender: "text"
+  debug_appender: "text"
+  info_appender: "text"
+  warn_appender: "json"
+  error_appender: "json"
+  print_appender: "text"
+  writer:
+    output: "stdout"
+    buffered: false
+  debug_writer:
+    output: "stdout"
+    buffered: false
+  info_writer:
+    output: "stdout"
+    buffered: false
+  warn_writer:
+    output: "stderr"
+    buffered: false
+  error_writer:
+    output: "stderr"
+    buffered: false
+  print_writer:
+    output: "stdout"
+    buffered: false

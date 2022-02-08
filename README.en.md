@@ -15,11 +15,33 @@
 
 _Check [HISTORY.md](./HISTORY.md) and [FUTURE.md](./FUTURE.md) to know about more information._
 
-### 🚀 Installation
-
 ### 📖 Guides
 
-### 🔥 Benchmarks
+```shell
+$ go get -u github.com/go-logit/logit-yaml
+```
+
+```go
+package main
+
+import (
+	"context"
+	"github.com/go-logit/logit"
+	_ "github.com/go-logit/logit-yaml" // Register yaml maker to logit.
+)
+
+func main() {
+	configPath := "./config.yml"
+
+	logger, err := logit.NewLoggerFromMaker(context.Background(), "yaml", configPath)
+	if err != nil {
+		panic(err)
+	}
+	defer logger.Close()
+
+	logger.Info("I am created by yaml maker!").String("yaml", configPath).End()
+}
+```
 
 ### 👥 Contributing
 
@@ -30,4 +52,3 @@ If you find that something is not working as expected please open an _**issue**_
 | Project | Author | Description | link |
 | -----------|--------|-------------|------------------|
 | logit | FishGoddess | A high-performance and easy-to-use logging foundation | [Gitee](https://gitee.com/go-logit/logit) / [GitHub](https://github.com/go-logit/logit) |
-
