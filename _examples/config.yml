@@ -9,7 +9,7 @@ logger:
   file_key: "file"
   line_key: "line"
   time_format: "20060102150405"
-  caller_depth: 3
+  caller_depth: 4
   auto_flush: ""
   appender: "text"
   debug_appender: "text"

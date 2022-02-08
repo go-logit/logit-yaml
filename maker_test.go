@@ -38,6 +38,26 @@ var (
 				Output   string `json:"output" yaml:"output"`
 				Buffered bool   `json:"buffered" yaml:"buffered"`
 			} `json:"writer" yaml:"writer"`
+			DebugWriter struct {
+				Output   string `json:"output" yaml:"output"`
+				Buffered bool   `json:"buffered" yaml:"buffered"`
+			} `json:"debug_writer" yaml:"debug_writer"`
+			InfoWriter struct {
+				Output   string `json:"output" yaml:"output"`
+				Buffered bool   `json:"buffered" yaml:"buffered"`
+			} `json:"info_writer" yaml:"info_writer"`
+			WarnWriter struct {
+				Output   string `json:"output" yaml:"output"`
+				Buffered bool   `json:"buffered" yaml:"buffered"`
+			} `json:"warn_writer" yaml:"warn_writer"`
+			ErrorWriter struct {
+				Output   string `json:"output" yaml:"output"`
+				Buffered bool   `json:"buffered" yaml:"buffered"`
+			} `json:"error_writer" yaml:"error_writer"`
+			PrintWriter struct {
+				Output   string `json:"output" yaml:"output"`
+				Buffered bool   `json:"buffered" yaml:"buffered"`
+			} `json:"print_writer" yaml:"print_writer"`
 		}{
 			Level:       "info",
 			NeedPid:     true,

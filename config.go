@@ -45,6 +45,26 @@ type config struct {
 			Output   string `json:"output" yaml:"output"`     // The output of writer. You can set stdout or stderr or a file path.
 			Buffered bool   `json:"buffered" yaml:"buffered"` // The output mode of writer. Use buffered writer if true.
 		} `json:"writer" yaml:"writer"` // The writer of logger.
+		DebugWriter struct {
+			Output   string `json:"output" yaml:"output"`     // The output of writer. You can set stdout or stderr or a file path.
+			Buffered bool   `json:"buffered" yaml:"buffered"` // The output mode of writer. Use buffered writer if true.
+		} `json:"debug_writer" yaml:"debug_writer"` // The debug writer of logger.
+		InfoWriter struct {
+			Output   string `json:"output" yaml:"output"`     // The output of writer. You can set stdout or stderr or a file path.
+			Buffered bool   `json:"buffered" yaml:"buffered"` // The output mode of writer. Use buffered writer if true.
+		} `json:"info_writer" yaml:"info_writer"` // The info writer of logger.
+		WarnWriter struct {
+			Output   string `json:"output" yaml:"output"`     // The output of writer. You can set stdout or stderr or a file path.
+			Buffered bool   `json:"buffered" yaml:"buffered"` // The output mode of writer. Use buffered writer if true.
+		} `json:"warn_writer" yaml:"warn_writer"` // The warning writer of logger.
+		ErrorWriter struct {
+			Output   string `json:"output" yaml:"output"`     // The output of writer. You can set stdout or stderr or a file path.
+			Buffered bool   `json:"buffered" yaml:"buffered"` // The output mode of writer. Use buffered writer if true.
+		} `json:"error_writer" yaml:"error_writer"` // The error writer of logger.
+		PrintWriter struct {
+			Output   string `json:"output" yaml:"output"`     // The output of writer. You can set stdout or stderr or a file path.
+			Buffered bool   `json:"buffered" yaml:"buffered"` // The output mode of writer. Use buffered writer if true.
+		} `json:"print_writer" yaml:"print_writer"` // The print writer of logger.
 	} `json:"logger" yaml:"logger"` // Wrap with logger, so we can use the same config file.
 }
 
@@ -147,10 +167,7 @@ func (c *config) ToOptions() ([]logit.Option, error) {
 		result = append(result, options.WithLineKey(cfg.LineKey))
 	}
 
-	if cfg.TimeFormat != "" {
-		result = append(result, options.WithTimeFormat(cfg.TimeFormat))
-	}
-
+	result = append(result, options.WithTimeFormat(cfg.TimeFormat))
 	if cfg.CallerDepth > 0 {
 		result = append(result, options.WithCallerDepth(cfg.CallerDepth))
 	}
@@ -227,6 +244,50 @@ func (c *config) ToOptions() ([]logit.Option, error) {
 		result = append(result, options.WithWriter(writer, cfg.Writer.Buffered))
 	}
 
-	// TODO Writer 配置
+	if cfg.DebugWriter.Output != "" {
+		writer, err := c.parseWriter(cfg.DebugWriter.Output)
+		if err != nil {
+			return nil, err
+		}
+
+		result = append(result, options.WithDebugWriter(writer, cfg.DebugWriter.Buffered))
+	}
+
+	if cfg.InfoWriter.Output != "" {
+		writer, err := c.parseWriter(cfg.InfoWriter.Output)
+		if err != nil {
+			return nil, err
+		}
+
+		result = append(result, options.WithInfoWriter(writer, cfg.InfoWriter.Buffered))
+	}
+
+	if cfg.WarnWriter.Output != "" {
+		writer, err := c.parseWriter(cfg.WarnWriter.Output)
+		if err != nil {
+			return nil, err
+		}
+
+		result = append(result, options.WithWarnWriter(writer, cfg.WarnWriter.Buffered))
+	}
+
+	if cfg.ErrorWriter.Output != "" {
+		writer, err := c.parseWriter(cfg.ErrorWriter.Output)
+		if err != nil {
+			return nil, err
+		}
+
+		result = append(result, options.WithErrorWriter(writer, cfg.ErrorWriter.Buffered))
+	}
+
+	if cfg.PrintWriter.Output != "" {
+		writer, err := c.parseWriter(cfg.PrintWriter.Output)
+		if err != nil {
+			return nil, err
+		}
+
+		result = append(result, options.WithPrintWriter(writer, cfg.PrintWriter.Buffered))
+	}
+
 	return result, nil
 }
