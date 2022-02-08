@@ -19,7 +19,7 @@ func TestConfigToOptions(t *testing.T) {
 		t.Error(err)
 	}
 
-	for _, _ = range options {
+	for range options {
 
 	}
 }

@@ -10,13 +10,14 @@ package logityaml
 
 import (
 	"fmt"
-	"github.com/go-logit/logit"
-	"github.com/go-logit/logit/core/appender"
-	"github.com/go-logit/logit/pkg"
 	"io"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/go-logit/logit"
+	"github.com/go-logit/logit/core/appender"
+	"github.com/go-logit/logit/pkg"
 )
 
 // config is the struct of yaml configuration.
@@ -39,6 +40,7 @@ type config struct {
 		InfoAppender  string `json:"info_appender" yaml:"info_appender"`   // The info appender of logger.
 		WarnAppender  string `json:"warn_appender" yaml:"warn_appender"`   // The warning appender of logger.
 		ErrorAppender string `json:"error_appender" yaml:"error_appender"` // The error appender of logger.
+		PrintAppender string `json:"print_appender" yaml:"print_appender"` // The print appender of logger.
 		Writer        struct {
 			Output   string `json:"output" yaml:"output"`     // The output of writer. You can set stdout or stderr or a file path.
 			Buffered bool   `json:"buffered" yaml:"buffered"` // The output mode of writer. Use buffered writer if true.
@@ -205,6 +207,15 @@ func (c *config) ToOptions() ([]logit.Option, error) {
 		}
 
 		result = append(result, options.WithErrorAppender(apdr))
+	}
+
+	if cfg.PrintAppender != "" {
+		apdr, err := c.parseAppender(cfg.PrintAppender)
+		if err != nil {
+			return nil, err
+		}
+
+		result = append(result, options.WithPrintAppender(apdr))
 	}
 
 	if cfg.Writer.Output != "" {
