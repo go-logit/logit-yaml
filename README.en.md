@@ -11,7 +11,7 @@
 
 ### 🥇 Features
 
-* coming soon...
+* Use yaml to create logit.Logger
 
 _Check [HISTORY.md](./HISTORY.md) and [FUTURE.md](./FUTURE.md) to know about more information._
 
@@ -26,6 +26,7 @@ package main
 
 import (
 	"context"
+
 	"github.com/go-logit/logit"
 	_ "github.com/go-logit/logit-yaml" // Register yaml maker to logit.
 )
@@ -49,6 +50,6 @@ If you find that something is not working as expected please open an _**issue**_
 
 ### 📦 Projects logit-yaml used
 
-| Project | Author | Description | link |
-| -----------|--------|-------------|------------------|
-| logit | FishGoddess | A high-performance and easy-to-use logging foundation | [Gitee](https://gitee.com/go-logit/logit) / [GitHub](https://github.com/go-logit/logit) |
+| Project | Author      | Description                                           | link                                                                                    |
+|---------|-------------|-------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| logit   | FishGoddess | A high-performance and easy-to-use logging foundation | [Gitee](https://gitee.com/go-logit/logit) / [GitHub](https://github.com/go-logit/logit) |
