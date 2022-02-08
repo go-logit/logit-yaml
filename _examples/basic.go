@@ -10,6 +10,7 @@ package main
 
 import (
 	"context"
+
 	"github.com/go-logit/logit"
 	_ "github.com/go-logit/logit-yaml" // Register yaml maker to logit.
 )
@@ -23,5 +24,11 @@ func main() {
 	}
 	defer logger.Close()
 
+	logger.Debug("I am created by yaml maker!").String("yaml", configPath).End()
 	logger.Info("I am created by yaml maker!").String("yaml", configPath).End()
+	logger.Warn("I am created by yaml maker!").String("yaml", configPath).End()
+	logger.Error("I am created by yaml maker!").String("yaml", configPath).End()
+	logger.Print("I am created by yaml maker!")
+	logger.Println("I am created by yaml maker!")
+	logger.Printf("I am created by yaml maker!")
 }
