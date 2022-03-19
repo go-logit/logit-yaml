@@ -27,23 +27,7 @@ func newYamlCreator() *yamlCreator {
 	return new(yamlCreator)
 }
 
-// parseOptions reads yaml and transfers yaml to []logit.Option.
-func (ym *yamlCreator) parseOptions(yamlFile string) ([]logit.Option, error) {
-	fileBytes, err := ioutil.ReadFile(yamlFile)
-	if err != nil {
-		return nil, err
-	}
-
-	cfg := newDefaultConfig()
-	err = yaml.Unmarshal(fileBytes, cfg)
-	if err != nil {
-		return nil, err
-	}
-
-	return cfg.ToOptions()
-}
-
-func (ym *yamlCreator) getConfig(params ...interface{}) (*config, error) {
+func (yc *yamlCreator) getConfig(params ...interface{}) (*config, error) {
 	if len(params) < 1 {
 		return nil, errors.New("logit-yaml: need the path of yaml configuration")
 	}
@@ -62,9 +46,21 @@ func (ym *yamlCreator) getConfig(params ...interface{}) (*config, error) {
 	return cfg, yaml.Unmarshal(configBytes, cfg)
 }
 
+func (yc *yamlCreator) getInterceptors(params ...interface{}) []logit.Interceptor {
+	interceptors := make([]logit.Interceptor, 0, len(params)+2)
+
+	for _, param := range params {
+		if interceptor, ok := param.(logit.Interceptor); ok {
+			interceptors = append(interceptors, interceptor)
+		}
+	}
+
+	return interceptors
+}
+
 // CreateLogger creates a new logger using params and returns an error if failed.
-func (ym *yamlCreator) CreateLogger(params ...interface{}) (*logit.Logger, error) {
-	cfg, err := ym.getConfig(params...)
+func (yc *yamlCreator) CreateLogger(params ...interface{}) (*logit.Logger, error) {
+	cfg, err := yc.getConfig(params...)
 	if err != nil {
 		return nil, err
 	}
@@ -72,6 +68,12 @@ func (ym *yamlCreator) CreateLogger(params ...interface{}) (*logit.Logger, error
 	options, err := cfg.ToOptions()
 	if err != nil {
 		return nil, err
+	}
+
+	// Design a Param struct to do this thing?
+	interceptors := yc.getInterceptors(params...)
+	if len(interceptors) > 0 {
+		options = append(options, logit.Options().WithInterceptors(interceptors...))
 	}
 
 	return logit.NewLogger(options...), nil
