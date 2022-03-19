@@ -1,10 +1,6 @@
-// Copyright 2021 Ye Zi Jie.  All rights reserved.
+// Copyright 2021 FishGoddess.  All rights reserved.
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
-//
-// Author: FishGoddess
-// Email: fishgoddess@qq.com
-// Created at 2021/11/02 00:22:27
 
 package logityaml
 
@@ -106,9 +102,9 @@ func createConfig(dir string, pattern string) (string, error) {
 
 // go test -v -cover -run=^TestYamlMakerGetConfig$
 func TestYamlMakerGetConfig(t *testing.T) {
-	maker := newYamlMaker()
+	creator := newYamlCreator()
 
-	_, err := maker.getConfig()
+	_, err := creator.getConfig()
 	if err == nil {
 		t.Error("err == nil")
 	}
@@ -119,7 +115,7 @@ func TestYamlMakerGetConfig(t *testing.T) {
 	}
 
 	t.Log(configPath)
-	cfg, err := maker.getConfig(configPath)
+	cfg, err := creator.getConfig(configPath)
 	if err != nil {
 		t.Error(err)
 	}

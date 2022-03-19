@@ -11,7 +11,7 @@
 
 ### 🥇 功能特性
 
-* 敬请期待。。。
+* 使用 yaml 配置创建 logit 的 Logger。
 
 _历史版本的特性请查看 [HISTORY.md](./HISTORY.md)。未来版本的新特性和计划请查看 [FUTURE.md](./FUTURE.md)。_
 
@@ -25,21 +25,26 @@ $ go get -u github.com/go-logit/logit-yaml
 package main
 
 import (
-	"context"
 	"github.com/go-logit/logit"
-	_ "github.com/go-logit/logit-yaml" // Register yaml maker to logit.
+	_ "github.com/go-logit/logit-yaml" // Register yaml creator to logit.
 )
 
 func main() {
 	configPath := "./config.yml"
 
-	logger, err := logit.NewLoggerFromMaker(context.Background(), "yaml", configPath)
+	logger, err := logit.NewLoggerFromCreator("yaml", configPath)
 	if err != nil {
 		panic(err)
 	}
 	defer logger.Close()
 
-	logger.Info("I am created by yaml maker!").String("yaml", configPath).End()
+	logger.Debug("I am created by yaml creator!").String("yaml", configPath).End()
+	logger.Info("I am created by yaml creator!").String("yaml", configPath).End()
+	logger.Warn("I am created by yaml creator!").String("yaml", configPath).End()
+	logger.Error("I am created by yaml creator!").String("yaml", configPath).End()
+	logger.Print("I am created by yaml creator!")
+	logger.Println("I am created by yaml creator!")
+	logger.Printf("I am created by yaml creator!")
 }
 ```
 
@@ -49,6 +54,7 @@ func main() {
 
 ### 📦 logit-yaml 使用的技术
 
-| 项目 | 作者 | 描述 | 链接 |
-| -----------|--------|-------------|-------------------|
-| logit | FishGoddess | 一个高性能、功能强大且极易上手的日志库 | [码云](https://gitee.com/go-logit/logit) / [GitHub](https://github.com/go-logit/logit) |
+| 项目    | 作者       | 描述                  | 链接                                                                                   |
+|-------|----------|---------------------|--------------------------------------------------------------------------------------|
+| logit | go-logit | 一个高性能、功能强大且极易上手的日志库 | [码云](https://gitee.com/go-logit/logit) / [GitHub](https://github.com/go-logit/logit) |
+| yaml  | go-yaml  | 一个极易上手的 yaml 配置库    | [GitHub](https://gopkg.in/yaml.v2)                                                   |
