@@ -1,15 +1,10 @@
-// Copyright 2021 Ye Zi Jie.  All rights reserved.
+// Copyright 2021 FishGoddess.  All rights reserved.
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
-//
-// Author: FishGoddess
-// Email: fishgoddess@qq.com
-// Created at 2021/11/02 00:10:11
 
 package logityaml
 
 import (
-	"context"
 	"errors"
 	"io/ioutil"
 
@@ -18,22 +13,22 @@ import (
 )
 
 func init() {
-	err := logit.RegisterLoggerMaker("yaml", newYamlMaker())
+	err := logit.RegisterLoggerCreator("yaml", newYamlMaker())
 	if err != nil {
 		panic(err)
 	}
 }
 
-// yamlMaker makes logit.Logger from yaml configuration.
-type yamlMaker struct{}
+// yamlCreator creates logit.Logger from yaml configuration.
+type yamlCreator struct{}
 
-// newYamlMaker creates a yaml logger maker.
-func newYamlMaker() *yamlMaker {
-	return new(yamlMaker)
+// newYamlMaker creates a yaml logger creator.
+func newYamlMaker() *yamlCreator {
+	return new(yamlCreator)
 }
 
 // parseOptions reads yaml and transfers yaml to []logit.Option.
-func (ym *yamlMaker) parseOptions(yamlFile string) ([]logit.Option, error) {
+func (ym *yamlCreator) parseOptions(yamlFile string) ([]logit.Option, error) {
 	fileBytes, err := ioutil.ReadFile(yamlFile)
 	if err != nil {
 		return nil, err
@@ -48,7 +43,7 @@ func (ym *yamlMaker) parseOptions(yamlFile string) ([]logit.Option, error) {
 	return cfg.ToOptions()
 }
 
-func (ym *yamlMaker) getConfig(params ...interface{}) (*config, error) {
+func (ym *yamlCreator) getConfig(params ...interface{}) (*config, error) {
 	if len(params) < 1 {
 		return nil, errors.New("logit-yaml: need the path of yaml configuration")
 	}
@@ -67,8 +62,8 @@ func (ym *yamlMaker) getConfig(params ...interface{}) (*config, error) {
 	return cfg, yaml.Unmarshal(configBytes, cfg)
 }
 
-// MakeLogger makes a new logger using params and returns an error if something wrong happens.
-func (ym *yamlMaker) MakeLogger(ctx context.Context, params ...interface{}) (*logit.Logger, error) {
+// CreateLogger creates a new logger using params and returns an error if failed.
+func (ym *yamlCreator) CreateLogger(params ...interface{}) (*logit.Logger, error) {
 	cfg, err := ym.getConfig(params...)
 	if err != nil {
 		return nil, err

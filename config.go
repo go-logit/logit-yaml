@@ -1,22 +1,19 @@
-// Copyright 2021 Ye Zi Jie.  All rights reserved.
+// Copyright 2021 FishGoddess.  All rights reserved.
 // Use of this source code is governed by a MIT style
 // license that can be found in the LICENSE file.
-//
-// Author: FishGoddess
-// Email: fishgoddess@qq.com
-// Created at 2021/11/29 02:26:34
 
 package logityaml
 
 import (
 	"fmt"
-	"github.com/go-logit/logit"
-	"github.com/go-logit/logit/core/appender"
-	"github.com/go-logit/logit/pkg"
 	"io"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/go-logit/logit"
+	"github.com/go-logit/logit/core/appender"
+	"github.com/go-logit/logit/pkg"
 )
 
 // config is the struct of yaml configuration.
@@ -216,6 +213,6 @@ func (c *config) ToOptions() ([]logit.Option, error) {
 		result = append(result, options.WithWriter(writer, cfg.Writer.Buffered))
 	}
 
-	// TODO Writer 配置
+	// TODO 各个级别的 Writer 配置
 	return result, nil
 }
