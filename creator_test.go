@@ -11,7 +11,50 @@ import (
 
 var (
 	testConfig = &config{
-		loggerConfig{
+		struct {
+			Level         string `json:"level" yaml:"level"`
+			NeedPid       bool   `json:"need_pid" yaml:"need_pid"`
+			NeedCaller    bool   `json:"need_caller" yaml:"need_caller"`
+			MsgKey        string `json:"msg_key" yaml:"msg_key"`
+			TimeKey       string `json:"time_key" yaml:"time_key"`
+			LevelKey      string `json:"level_key" yaml:"level_key"`
+			PidKey        string `json:"pid_key" yaml:"pid_key"`
+			FileKey       string `json:"file_key" yaml:"file_key"`
+			LineKey       string `json:"line_key" yaml:"line_key"`
+			TimeFormat    string `json:"time_format" yaml:"time_format"`
+			CallerDepth   int    `json:"caller_depth" yaml:"caller_depth"`
+			AutoFlush     string `json:"auto_flush" yaml:"auto_flush"`
+			Appender      string `json:"appender" yaml:"appender"`
+			DebugAppender string `json:"debug_appender" yaml:"debug_appender"`
+			InfoAppender  string `json:"info_appender" yaml:"info_appender"`
+			WarnAppender  string `json:"warn_appender" yaml:"warn_appender"`
+			ErrorAppender string `json:"error_appender" yaml:"error_appender"`
+			PrintAppender string `json:"print_appender" yaml:"print_appender"`
+			Writer        struct {
+				Output   string `json:"output" yaml:"output"`
+				Buffered bool   `json:"buffered" yaml:"buffered"`
+			} `json:"writer" yaml:"writer"`
+			DebugWriter struct {
+				Output   string `json:"output" yaml:"output"`
+				Buffered bool   `json:"buffered" yaml:"buffered"`
+			} `json:"debug_writer" yaml:"debug_writer"`
+			InfoWriter struct {
+				Output   string `json:"output" yaml:"output"`
+				Buffered bool   `json:"buffered" yaml:"buffered"`
+			} `json:"info_writer" yaml:"info_writer"`
+			WarnWriter struct {
+				Output   string `json:"output" yaml:"output"`
+				Buffered bool   `json:"buffered" yaml:"buffered"`
+			} `json:"warn_writer" yaml:"warn_writer"`
+			ErrorWriter struct {
+				Output   string `json:"output" yaml:"output"`
+				Buffered bool   `json:"buffered" yaml:"buffered"`
+			} `json:"error_writer" yaml:"error_writer"`
+			PrintWriter struct {
+				Output   string `json:"output" yaml:"output"`
+				Buffered bool   `json:"buffered" yaml:"buffered"`
+			} `json:"print_writer" yaml:"print_writer"`
+		}{
 			Level:       "info",
 			NeedPid:     true,
 			NeedCaller:  true,
@@ -59,9 +102,9 @@ func createConfig(dir string, pattern string) (string, error) {
 
 // go test -v -cover -run=^TestYamlMakerGetConfig$
 func TestYamlMakerGetConfig(t *testing.T) {
-	maker := newYamlMaker()
+	creator := newYamlCreator()
 
-	_, err := maker.getConfig()
+	_, err := creator.getConfig()
 	if err == nil {
 		t.Error("err == nil")
 	}
@@ -72,7 +115,7 @@ func TestYamlMakerGetConfig(t *testing.T) {
 	}
 
 	t.Log(configPath)
-	cfg, err := maker.getConfig(configPath)
+	cfg, err := creator.getConfig(configPath)
 	if err != nil {
 		t.Error(err)
 	}

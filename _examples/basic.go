@@ -18,5 +18,11 @@ func main() {
 	}
 	defer logger.Close()
 
+	logger.Debug("I am created by yaml creator!").String("yaml", configPath).End()
 	logger.Info("I am created by yaml creator!").String("yaml", configPath).End()
+	logger.Warn("I am created by yaml creator!").String("yaml", configPath).End()
+	logger.Error("I am created by yaml creator!").String("yaml", configPath).End()
+	logger.Print("I am created by yaml creator!")
+	logger.Println("I am created by yaml creator!")
+	logger.Printf("I am created by yaml creator!")
 }

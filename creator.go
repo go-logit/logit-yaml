@@ -13,7 +13,7 @@ import (
 )
 
 func init() {
-	err := logit.RegisterLoggerCreator("yaml", newYamlMaker())
+	err := logit.RegisterLoggerCreator("yaml", newYamlCreator())
 	if err != nil {
 		panic(err)
 	}
@@ -22,8 +22,8 @@ func init() {
 // yamlCreator creates logit.Logger from yaml configuration.
 type yamlCreator struct{}
 
-// newYamlMaker creates a yaml logger creator.
-func newYamlMaker() *yamlCreator {
+// newYamlCreator creates a yaml logger creator.
+func newYamlCreator() *yamlCreator {
 	return new(yamlCreator)
 }
 

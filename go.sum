@@ -1,9 +1,11 @@
-github.com/FishGoddess/logit v0.4.10 h1:lSTZVKLld7nPUvM8ccVSjkl6Gg+mxN+aRJpWJ1s7yp0=
-github.com/FishGoddess/logit v0.4.10/go.mod h1:a2dFSibwfZXNNZ/V1jMOQBImPoySaxdPFThbsm17ZdY=
-github.com/FishGoddess/logit v0.4.11 h1:d/KQf4eONmuTg1EVGJ+yQaK+Q/oANsE0G+BEI6hzZC4=
-github.com/FishGoddess/logit v0.4.11/go.mod h1:a2dFSibwfZXNNZ/V1jMOQBImPoySaxdPFThbsm17ZdY=
 github.com/go-logit/logit v0.4.16 h1:7AtUB5ypp7HJNpY+CCKZIpoEGz1nl17lhv1RU4GE6y4=
 github.com/go-logit/logit v0.4.16/go.mod h1:xGlUwkrGmBG3x4O8JctrrMJdc8rxUjAxZDrY5fhMnis=
+github.com/go-logit/logit v0.4.17 h1:CAgz+VY2TqIMsOWbt1V+ukoPHYKdDNkLNCFwd2WHZz8=
+github.com/go-logit/logit v0.4.17/go.mod h1:xGlUwkrGmBG3x4O8JctrrMJdc8rxUjAxZDrY5fhMnis=
+github.com/go-logit/logit v0.4.18 h1:51YfYqvU0IN4iIesrF2WKWo28nPixVGgUg9sF8XVooc=
+github.com/go-logit/logit v0.4.18/go.mod h1:xGlUwkrGmBG3x4O8JctrrMJdc8rxUjAxZDrY5fhMnis=
+github.com/go-logit/logit v0.4.22/go.mod h1:xGlUwkrGmBG3x4O8JctrrMJdc8rxUjAxZDrY5fhMnis=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v2 v2.4.0 h1:D8xgwECY7CYvx+Y2n4sBz93Jn9JRvxdiyyo8CTfuKaY=
 gopkg.in/yaml.v2 v2.4.0/go.mod h1:RDklbk79AGWmwhnvt/jBztapEOGDOx6ZbXqjP6csGnQ=
